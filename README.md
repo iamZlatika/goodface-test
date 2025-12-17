@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Goodface Test (Next.js + React + Tailwind + TS)
 
-## Getting Started
+Демо-сторінка замовлення проксі за макетом Figma: вибір кількості IP, періоду підписки й локації з підсумком замовлення.
 
-First, run the development server:
+Figma: https://www.figma.com/design/0Fg3YESzCaW77sCQdF8OAZ/Goodface-%7C-Test-task-front-end-dev?node-id=0-1
 
+## Технології
+- Next.js 16 (App Router, React Server/Client Components)
+- React 19, React Compiler увімкнено
+- TypeScript (strict)
+- TailwindCSS v4
+
+## Відповідність вимогам завдання
+- Адаптивність: мобайл/десктоп, лейаути через Tailwind (`lg:*`), окремі компоненти для різних брейкпоінтів
+- Компонентний підхід: сторінка зібрана з дрібних `ui` та `features`
+- Semantic HTML + базовий a11y (ролі для кастомних віджетів)
+- TailwindCSS використано як основну систему стилів
+- Типізація з TypeScript
+- Структура `app/` + компоненти в окремих папках
+
+Деталі архітектури: див. `ARCHITECTURE.md`. Рев’ю з ризиками й поліпшеннями: `REVIEW.md`.
+
+## Запуск локально
 ```bash
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+```
+Відкрити http://localhost:3000
+
+## Структура проекту (скорочено)
+```
+app/
+  layout.tsx, page.tsx  # каркас і сторінка
+components/
+  layout/               # Sidebar, MobileHeader
+  pages/                # композиція сторінки (ProductOrderPage)
+  features/             # бізнес-компоненти (MainCard, SummaryCard, ...)
+  ui/                   # дрібні перевикористовувані елементи (кнопки, іконки, card)
+lib/                    # утиліти, словники, бізнес-логіка (discounts, ips, i18n)
+providers/              # контексти (OrderProvider)
+public/                 # статичні файли (флагі тощо)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ключові місця:
+- `components/pages/product-order-page.tsx` — складання сторінки
+- `providers/order-provider.tsx` — стан замовлення (кількість, період, локація, total)
+- `lib/discounts.ts` — розрахунок ціни/діапазонів
+- `components/features/main-card/*` — селект локації, слайдер кількості, періоди
+- `components/features/summary-card` — підсумок і промокод
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Скрипти
+- `npm run dev` — запуск дев-сервера
+- `npm run build` — продакшн білд
+- `npm start` — запуск зібраної версії
+- `npm run lint` — ESLint перевірка
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
